@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程表配置编辑器</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>课程表配置编辑器</h1>
+            <div class="toolbar">
+                <input type="file" id="fileInput" accept=".js" style="display: none;">
+                <button onclick="document.getElementById('fileInput').click()">上传JS文件</button>
+                <button onclick="exportConfig()">导出配置</button>
+                <button onclick="resetConfig()">重置</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- 侧边栏 -->
+            <div class="sidebar">
+                <ul>
+                    <li data-tab="basic" class="active">基础设置</li>
+                    <li data-tab="subjects">科目名称</li>
+                    <li data-tab="timetable">时间表</li>
+                    <li data-tab="daily">每日课表</li>
+                    <li data-tab="divider">分隔线</li>
+                    <li data-tab="style">样式配置</li>
+                </ul>
+            </div>
+
+            <!-- 主内容区 -->
+            <div class="content">
+                <div id="basic" class="tab-content active">
+                    <h2>基础设置</h2>
+                    <div class="form-group">
+                        <label>倒计时目标：</label>
+                        <input type="text" id="countdown_target" placeholder="YYYY-MM-DD 或 hidden">
+                    </div>
+                    <div class="form-group">
+                        <label>显示星期：</label>
+                        <input type="checkbox" id="week_display">
+                    </div>
+                </div>
+
+                <div id="subjects" class="tab-content">
+                    <h2>科目名称配置</h2>
+                    <button onclick="addSubjectRow()">添加科目</button>
+                    <table id="subjectsTable">
+                        <thead>
+                            <tr>
+                                <th>简写</th>
+                                <th>全称</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="timetable" class="tab-content">
+                    <h2>时间表配置</h2>
+                    <div style="margin-bottom: 10px;">
+                        <select id="timetableDay" onchange="loadTimetableDay()">
+                            <option value="">请选择或添加时间表类型</option>
+                        </select>
+                        <button onclick="addNewTimetableType()">添加新类型</button>
+                        <button onclick="deleteTimetableDay()" style="background: #e74c3c;">删除此类型</button>
+                    </div>
+                    <button onclick="addTimetableRow()">添加时间段</button>
+                    <button onclick="saveTimetableToConfig()">保存当前时间表</button>
+                    <table id="timetableTable">
+                        <thead>
+                            <tr>
+                                <th>时间段</th>
+                                <th>内容</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <div id="daily" class="tab-content">
+                    <h2>每日课表配置</h2>
+                    <div id="dailyClasses"></div>
+                </div>
+
+                <div id="divider" class="tab-content">
+                    <h2>分隔线配置</h2>
+                    <div style="margin-bottom: 10px;">
+                        <select id="dividerDay" onchange="loadDividerDay()">
+                            <option value="">请选择或添加分隔线类型</option>
+                        </select>
+                        <button onclick="addNewDividerType()">添加新类型</button>
+                    </div>
+                    <div id="dividerInputs">
+                        <p>请先选择或添加分隔线类型</p>
+                    </div>
+                </div>
+
+                <div id="style" class="tab-content">
+                    <h2>样式配置</h2>
+                    <table id="styleTable">
+                        <thead>
+                            <tr>
+                                <th>属性</th>
+                                <th>值</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="parser.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
